@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Task{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Edit Task: {{ task.title }}</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="alert alert-dismissible fade show" role="alert">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('main.edit_task', task_id=task.id) }}">
+        <div class="mb-3">
+            <label for="title" class="form-label">Task Title</label>
+            <input type="text" name="title" id="title" class="form-control" value="{{ task.title }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" id="description" class="form-control" rows="5" required>{{ task.description }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select name="status" id="status" class="form-select" required>
+                <option value="To Do" {% if task.status == 'To Do' %}selected{% endif %}>To Do</option>
+                <option value="In Progress" {% if task.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                <option value="Done" {% if task.status == 'Done' %}selected{% endif %}>Done</option>
+                <option value="Late" {% if task.status == 'Late' %}selected{% endif %}>Late</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="users" class="form-label">Assigned Users</label>
+            <div>
+                {% for user in all_users %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="users" value="{{ user.id }}" id="user_{{ user.id }}"
+                        {% if user.id in assigned_user_ids %}checked{% endif %}>
+                        <label class="form-check-label" for="user_{{ user.id }}">
+                            {{ user.name }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Update Task</button>
+        </div>
+    </form>
+
+  
+
+</div>
+
+{% endblock %}

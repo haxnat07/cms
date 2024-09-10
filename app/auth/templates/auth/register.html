@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+
+<!-- ============================ COMPONENT REGISTER   ================================= -->
+	<div class="card mx-auto" style="max-width:520px; margin-top:40px;">
+      <article class="card-body">
+		<header class="mb-4"><h4 class="card-title">Sign up</h4></header>
+		
+		<form method="post">
+			<!-- {% for error in get_flashed_messages(with_categories=True) %}
+						<span class="error">{{ error[1] }}</span><br>
+					{% endfor %} -->
+					{% with messages = get_flashed_messages(with_categories=true) %}
+					{% if messages %}
+						<div class="alert alert-dismissible fade show" role="alert">
+							{% for category, message in messages %}
+								<div class="alert alert-{{ category }}">{{ message }}</div>
+							{% endfor %}
+						</div>
+					{% endif %}
+				{% endwith %}
+			<div class="form-row">
+				<div class="col form-group">
+					<label for="name">Name</label>
+					<input type="text" name="name" class="form-control" placeholder="">
+					
+				</div>
+			</div>
+			
+			
+			
+			<div class="row mb-3 mt-3">
+				<div class="form-group col-md-6">
+					<label for="password">Create password</label>
+					<input class="form-control" name="password" type="password">
+					
+				</div>
+				<div class="form-group col-md-6">
+					<label for="confirm_password">Repeat password</label>
+					<input class="form-control" name="confirm_password" type="password">
+					
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-block">Register</button>
+			</div>
+		</form>
+		
+		</article><!-- card-body.// -->
+    </div> <!-- card .// -->
+    <p class="text-center mt-4">Have an account? <a href="{{ url_for('auth.login') }}">Log In</a></p>
+    <br><br>
+<!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+
+
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+{% endblock %}
+
